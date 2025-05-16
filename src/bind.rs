@@ -1,7 +1,7 @@
 use serde::Serialize;
 
 #[derive(Debug, Serialize)]
-pub struct Command {
+pub struct Bind {
     pub main_key: Option<String>,
     pub key: String,
     pub action: String,
@@ -9,18 +9,17 @@ pub struct Command {
     pub comment: Option<String>,
 }
 
-impl Command {
+impl Bind {
     pub fn from_line(line: &str) -> Option<Self> {
         let line = line.replace("bind =", "").replace("bindm =", "");
         let cleaned_line = line.trim();
 
-        // Séparation du commentaire
-        let (command_part, comment) = match cleaned_line.split_once('#') {
+        let (bind_part, comment) = match cleaned_line.split_once('#') {
             Some((cmd, cmt)) => (cmd.trim(), Some(cmt.trim().to_string())),
             None => (cleaned_line, None),
         };
 
-        let parts: Vec<&str> = command_part.split(',').map(|s| s.trim()).collect();
+        let parts: Vec<&str> = bind_part.split(',').map(|s| s.trim()).collect();
         if parts.len() < 3 {
             return None;
         }
