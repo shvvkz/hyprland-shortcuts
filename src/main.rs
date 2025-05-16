@@ -9,6 +9,10 @@ use std::path::Path;
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 fn main() -> io::Result<()> {
+    if handle_args() {
+        return Ok(());
+    }
+
     let home_dir = std::env::var("HOME").expect("Could not get HOME environment variable");
     let path = format!("{}/.config/hypr/hyprland.conf", home_dir);
     let raw_lines = read_lines(path)?;
@@ -82,7 +86,7 @@ fn self_update() -> Result<(), Box<dyn std::error::Error>> {
                 "-o",
                 tmp_path,
                 &format!(
-                    "https://github.com/{}/releases/download/{}/hyprland-shortcuts-x86_64",
+                    "https://github.com/{}/releases/download/{}/hyprland-shortcuts",
                     repo, tag
                 ),
             ])
