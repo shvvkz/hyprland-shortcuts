@@ -1,4 +1,3 @@
-# Variables
 REPO = shvvkz/hyprland-shortcuts
 BINARY_NAME = hyprland-shortcuts
 INSTALL_DIR = /usr/local/bin

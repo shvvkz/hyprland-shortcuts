@@ -1,7 +1,12 @@
 use clap::Parser;
 
 #[derive(Parser, Debug)]
-#[command(name = "hyprland-shortcuts", version, disable_version_flag = true, about = "Manage Hyprland Shortcuts easily")]
+#[command(
+    name = "hyprland-shortcuts",
+    version,
+    disable_version_flag = true,
+    about = "Manage Hyprland Shortcuts easily"
+)]
 pub struct Flags {
     /// Show version
     #[arg(short = 'v', long = "version")]
@@ -14,4 +19,8 @@ pub struct Flags {
     /// Display all comments found
     #[arg(short = 'd', long = "display")]
     pub display: bool,
+
+    /// Specify a custom path for hyprland.conf
+    #[arg(short = 'p', long = "path")]
+    pub path: Option<String>,
 }
