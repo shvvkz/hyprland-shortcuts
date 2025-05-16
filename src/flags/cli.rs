@@ -1,7 +1,12 @@
 use clap::Parser;
 
 #[derive(Parser, Debug)]
-#[command(name = "hyprland-shortcuts", version, disable_version_flag = true, about = "Manage Hyprland Shortcuts easily")]
+#[command(
+    name = "hyprland-shortcuts",
+    version,
+    disable_version_flag = true,
+    about = "Manage Hyprland Shortcuts easily"
+)]
 pub struct Flags {
     /// Show version
     #[arg(short = 'v', long = "version")]

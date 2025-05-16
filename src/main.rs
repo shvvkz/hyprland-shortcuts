@@ -1,11 +1,11 @@
 mod app;
-mod flags;
 mod bind;
 mod commands;
+mod flags;
 mod utils;
 
-use app::run;
 use crate::flags::cli::Flags;
+use app::run;
 use clap::Parser;
 
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");

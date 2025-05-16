@@ -1,4 +1,4 @@
-use crate::bind::bind::Bind;
+use crate::bind::parser::Bind;
 
 pub fn display_comments(binds: &Vec<Bind>) {
     if binds.is_empty() {

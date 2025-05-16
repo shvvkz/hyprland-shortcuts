@@ -1,6 +1,6 @@
-use crate::flags::cli::Flags;
 use crate::bind::parser::parse_binds;
-use crate::commands::{display::display_comments, version::print_version, update::update};
+use crate::commands::{display::display_comments, update::update, version::print_version};
+use crate::flags::cli::Flags;
 
 pub fn run(flags: Flags) -> Result<(), Box<dyn std::error::Error>> {
     if flags.version {
