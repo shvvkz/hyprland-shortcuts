@@ -14,4 +14,8 @@ pub struct Flags {
     /// Display all comments found
     #[arg(short = 'd', long = "display")]
     pub display: bool,
+
+    /// Specify a custom path for hyprland.conf
+    #[arg(short = 'p', long = "path")]
+    pub path: Option<String>,
 }
