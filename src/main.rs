@@ -8,23 +8,20 @@ use command::Command;
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 fn main() -> io::Result<()> {
-    if handle_args() {
-        return Ok(());
-    }
-
     let home_dir = std::env::var("HOME").expect("Could not get HOME environment variable");
     let path = format!("{}/.config/hypr/hyprland.conf", home_dir);
     let raw_lines = read_lines(path)?;
 
-    let comments: Vec<String> = raw_lines
+    let commands: Vec<Command> = raw_lines
         .into_iter()
         .filter(|line| line.contains("bind =") || line.contains("bindm ="))
         .filter_map(|line| Command::from_line(&line))
-        .filter_map(|cmd| cmd.comment)
         .collect();
 
-    for comment in comments {
-        println!("{}", comment);
+    for comments in commands.iter() {
+        if let Some(comment) = &comments.comment {
+            println!("{}", comment);
+        }
     }
 
     Ok(())
@@ -32,7 +29,7 @@ fn main() -> io::Result<()> {
 
 fn read_lines<P: AsRef<Path>>(path: P) -> io::Result<Vec<String>> {
     let file = File::open(path)?;
-    Ok(io::BufReader::new(file).lines().filter_map(Result::ok).collect())
+    io::BufReader::new(file).lines().collect()
 }
 
 fn handle_args() -> bool {
@@ -57,11 +54,11 @@ fn self_update() -> Result<(), Box<dyn std::error::Error>> {
     use std::process::Command;
 
     let repo = "shvvkz/hyprland-shortcuts";
-    let install_dir = "/usr/local/bin"; // ✅ Nouveau chemin global
+    let install_dir = "/usr/local/bin";
     let binary_path = format!("{}/hyprland-shortcuts", install_dir);
 
     let latest_version_output = Command::new("curl")
-        .args(&[
+        .args([
             "-s",
             &format!("https://api.github.com/repos/{}/releases/latest", repo),
         ])
@@ -77,10 +74,9 @@ fn self_update() -> Result<(), Box<dyn std::error::Error>> {
     if tag != format!("v{}", VERSION) {
         println!("⬇️ New version {} found, updating...", tag);
 
-        // Télécharger dans /tmp puis déplacer avec sudo
         let tmp_path = "/tmp/hyprland-shortcuts";
         Command::new("curl")
-            .args(&[
+            .args([
                 "-L",
                 "-o",
                 tmp_path,
@@ -91,12 +87,11 @@ fn self_update() -> Result<(), Box<dyn std::error::Error>> {
             ])
             .status()?;
 
-        // Déplacer et rendre exécutable
         Command::new("sudo")
-            .args(&["mv", tmp_path, &binary_path])
+            .args(["mv", tmp_path, &binary_path])
             .status()?;
         Command::new("sudo")
-            .args(&["chmod", "+x", &binary_path])
+            .args(["chmod", "+x", &binary_path])
             .status()?;
 
         println!("✅ Updated to version {}", tag);

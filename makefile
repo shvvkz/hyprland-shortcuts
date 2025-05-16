@@ -27,7 +27,7 @@ install:
 		echo "❌ Failed to fetch latest version."; exit 1
 	fi
 	echo "⬇️ Downloading version $$LATEST_VERSION..."
-	curl -L -o /tmp/$(BINARY_NAME) https://github.com/$(REPO)/releases/download/$$LATEST_VERSION/$(BINARY_NAME)-$(ARCH)
+	curl -L -o /tmp/$(BINARY_NAME) https://github.com/$(REPO)/releases/download/$$LATEST_VERSION/$(BINARY_NAME)
 	sudo mv /tmp/$(BINARY_NAME) $(INSTALL_DIR)/$(BINARY_NAME)
 	sudo chmod +x $(INSTALL_DIR)/$(BINARY_NAME)
 	echo "✅ $(BINARY_NAME) installed to $(INSTALL_DIR)"
