@@ -14,10 +14,10 @@ release:
 	@echo "🔖 Creating release for version v$(VERSION)..."
 	git add Cargo.toml
 	git commit -m "🔖 Bump version to v$(VERSION)" || echo "✅ Version already committed."
-	git tag -f v$(VERSION)  # Force le tag sur le dernier commit
-	git push origin main --follow-tags
+	git tag v$(VERSION)
+	git push origin main
+	git push origin v$(VERSION)
 	@echo "🚀 Release v$(VERSION) pushed!"
-
 
 install:
 	@echo "📦 Installing $(BINARY_NAME) to $(INSTALL_DIR)..."
