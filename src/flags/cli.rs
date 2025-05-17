@@ -16,7 +16,7 @@ pub struct Flags {
     #[arg(short = 'u', long = "update")]
     pub update: bool,
 
-    /// Display all comments found
+    /// Display all bind comments found in hyprland.conf 
     #[arg(short = 'd', long = "display")]
     pub display: bool,
 
